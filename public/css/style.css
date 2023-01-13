@@ -1,0 +1,9 @@
+table,
+td {
+  border: 1px solid black;
+  background-color: rgb(17, 201, 247);
+}
+thead{
+    background-color: darkslategray;
+    color: aliceblue;
+}
