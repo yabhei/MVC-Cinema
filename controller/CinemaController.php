@@ -15,7 +15,7 @@ class CinemaController
         $pdo = Connect::seConnecter();
 
         $requete = $pdo->query("
-            SELECT id_film, title_film , year_film
+            SELECT id_film, title_film , year_film,id_director
             FROM film 
            
             ");
@@ -27,7 +27,7 @@ class CinemaController
         $pdo = Connect::seConnecter();
 
         $requete = $pdo->query("
-        SELECT  a.id_actor , p.fname_person, p.lname_person  , p.birthday_person , p.sex_person
+        SELECT  a.id_actor , p.fname_person, p.lname_person  , p.birthday_person , p.sex_person,p.image,p.id_person
         FROM actor a, person p  
         WHERE a.id_person = p.id_person
         ");
@@ -69,100 +69,168 @@ class CinemaController
         require "view/ListRole.php";
     }
 
-// public function detailGenre($id)
-// {
-//     $pdo = Connect::seConnecter();
+public function detailGenre($id)
+{
+    $pdo = Connect::seConnecter();
 
-//     $requete = $pdo->prepare("
-// SELECT   f.nom_film , g.libelle 
-// FROM   film f ,  posseder po , genre g 
-// WHERE po.id_genre = g.id_genre 
-// AND po.id_film = f.id_film
-// AND g.id_genre = :id
-// ");
-//     $requete->execute(["id" => $id]);
-//     require "view/detailGenre.php";
-// }
+    $requete = $pdo->prepare("
+SELECT   f.title_film , g.name_category 
+FROM   film f ,  belong_category po , category g 
+WHERE po.id_category = g.id_category 
+AND po.id_film = f.id_film
+AND g.id_category = :id
+");
+    $requete->execute(["id" => $id]);
+    require "view/detailGenre.php";
+}
 
-// public function detailRole($id)
-// {
-//     $pdo = Connect::seConnecter();
+public function detailRole($id)
+{
+    $pdo = Connect::seConnecter();
 
-//     $requete = $pdo->prepare("
-// SELECT r.nom_role , p.prenom_personne AS fn , p.nom_personne AS ln , f.nom_film AS nomf
-// FROM role r , personne p , jouer j , film f , acteur a 
-// WHERE j.id_film = f.id_film 
-// AND j.id_role = r.id_role 
-// AND j.id_acteur = a.id_acteur 
-// AND a.id_personnage = p.id_personnage 
-// AND r.id_role = :id"
-//     );
-//     $requete->execute(["id" => $id]);
-//     require "view/detailRole.php";
-// }
+    $requete = $pdo->prepare("
+SELECT r.name_role , p.fname_person AS fn , p.lname_person AS ln , f.title_film AS nomf
+FROM role r , person p , play j , film f , actor a 
+WHERE j.id_film = f.id_film 
+AND j.id_role = r.id_role 
+AND j.id_actor = a.id_actor 
+AND a.id_person = p.id_person 
+AND r.id_role = :id"
+    );
+    $requete->execute(["id" => $id]);
+    require "view/detailRole.php";
+}
 
-// public function detailFilm($id)
-// {
-//     $pdo = Connect::seConnecter();
-//     $pdcast = Connect::seConnecter();
-//     $requete = $pdo->prepare("
-// SELECT  f.nom_film , f.date_sortie , f.duree ,f.image , p.prenom_personne , g.libelle 
-// FROM   film f , realisateur r , posseder po , genre g ,personne p
-// WHERE po.id_genre = g.id_genre 
-// AND po.id_film = f.id_film
-// AND f.id_realisateur = r.id_realisateur
-// AND r.id_personnage = p.id_personnage
-// AND f.id_film = :id
+public function detailFilm($id)
+{
+    $pdo = Connect::seConnecter();
+  
+    $requete = $pdo->prepare("
+SELECT  f.id_film , f.title_film , f.year_film , f.duration_film ,f.image , p.fname_person , g.name_category 
+FROM   film f , director r , belong_category po , category g ,person p
+WHERE po.id_category = g.id_category 
+AND po.id_film = f.id_film
+AND f.id_director = r.id_director
+AND r.id_person = p.id_person
+AND f.id_film = :id
 
-// ");
-//     $requete->execute(["id" => $id]);
+");
+    $requete->execute(["id" => $id]);
 
-//     $castreque = $pdcast->prepare("
-// SELECT  p.prenom_personne , p.nom_personne , r.nom_role 
-// FROM   film f , personne p , acteur a ,role r , jouer j 
-// WHERE j.id_film = f.id_film
-// AND j.id_role = r.id_role
-// AND  j.id_acteur = a.id_acteur
-// AND a.id_personnage = p.id_personnage
-// AND f.id_film = :id
-// ");
+    $castreque = $pdo->prepare("
+SELECT  p.fname_person , p.lname_person , r.name_role 
+FROM   film f , person p , actor a ,role r , play j 
+WHERE j.id_film = f.id_film
+AND j.id_role = r.id_role
+AND  j.id_actor = a.id_actor
+AND a.id_person = p.id_person
+AND f.id_film = :id
+");
 
-//     $castreque->execute(["id" => $id]);
+    $castreque->execute(["id" => $id]);
 
-//     require "view/detailFilm.php";
-// }
+    require "view/detailFilm.php";
+}
 
 
-// public function detailActeur($id)
-// {
-//     $pdo = Connect::seConnecter();
+public function detailActeur($id)
+{
+    $pdo = Connect::seConnecter();
 
-//     $requete = $pdo->prepare("
-// SELECT  p.prenom_personne , p.nom_personne , p.date_naissance, p.sexe_personne, f.nom_film AS nomf
-// FROM  personne p , film f , acteur a, jouer j  
-// WHERE j.id_film = f.id_film 
-// AND j.id_acteur = a.id_acteur 
-// AND a.id_personnage = p.id_personnage 
-// AND a.id_acteur = :id"
-//     );
-//     $requete->execute(["id" => $id]);
-//     require "view/detailActeur.php";
-// }
+    $requete = $pdo->prepare("
+SELECT  p.fname_person , p.lname_person , p.birthday_person, p.sex_person, f.title_film AS nomf,p.image
+FROM  person p , film f , actor a, play j  
+WHERE j.id_film = f.id_film 
+AND j.id_actor = a.id_actor 
+AND a.id_person = p.id_person 
+AND a.id_actor = :id"
+    );
+    $requete->execute(["id" => $id]);
+    require "view/detailActeur.php";
+}
 
-// public function detailRealisateur($id)
-// {
-//     $pdo = Connect::seConnecter();
 
-//     $requete = $pdo->prepare("
-// SELECT  p.prenom_personne , p.nom_personne ,f.nom_film
-// FROM  personne p , film f ,realisateur r 
-// WHERE r.id_personnage = p.id_personnage 
-// AND r.id_realisateur = f.id_realisateur
-// AND r.id_realisateur = :id"
-//     );
-//     $requete->execute(["id" => $id]);
-//     require "view/detailRealisateur.php";
-// }
+public function detailRealisateur($id)
+{
+    $pdo = Connect::seConnecter();
+
+    $requete = $pdo->prepare("
+SELECT  p.fname_person , p.lname_person ,f.title_film
+FROM  person p , film f ,director r 
+WHERE r.id_person = p.id_person 
+AND r.id_director = f.id_director
+AND r.id_director = :id"
+    );
+    $requete->execute(["id" => $id]);
+    require "view/detailRealisateur.php";
+}
+
+public function ajouterRole($id,$name){
+      
+    $pdo = Connect::seConnecter();
+
+    $ajouter = $pdo->prepare("
+    INSERT INTO role (id_role, name_role)
+    VALUE (:id_role,:name_role)
+    
+    ");
+
+    $ajouter->execute([':id_role'=>$id, ':name_role'=>$name]);
+    
+
+    $requete = $pdo->query("
+SELECT id_role, name_role
+FROM role 
+");
+    require "view/ListRole.php";
+    
+
+}
+
+public function ajouterGenre($id,$name){
+    $pdo = Connect::seConnecter();
+
+    $ajouter = $pdo->prepare("
+    INSERT INTO category (id_category, name_category)
+    VALUE (:id_category,:name_category)
+    
+    ");
+
+    $ajouter->execute([':id_category'=>$id, ':name_category'=>$name]);
+
+    $requete = $pdo->query("
+    SELECT id_category ,name_category
+    FROM category 
+    ");
+        require "view/ListGenres.php";
+
+}
+
+public function ajouterFilm($id,$title,$year,$duration,$idd){
+    $pdo = Connect::seConnecter();
+
+    $ajouter = $pdo->prepare("
+    INSERT INTO film (id_film, title_film,year_film,duration_film,id_director)
+    VALUE (:id_film, :title_film,:year_film,:duration_film,:id_director)
+    
+    ");
+
+    $ajouter->execute([':id_film'=>$id, ':title_film'=>$title,':year_film'=>$year,':duration_film'=>$duration, ':id_director'=>$idd]);
+
+    // $ajoutgenre = $pdo->prepare("
+    // INSERT INTO category ()
+    // VALUE (:id_film, :title_film,:year_film,:duration_film,:id_director)
+    // ")
+    $requete = $pdo->query("
+    SELECT id_film, title_film , year_film,id_director
+    FROM film 
+   
+    ");
+require "view/ListFilms.php";
+
+}
+
+
 
 }
 

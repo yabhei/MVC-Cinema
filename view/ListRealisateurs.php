@@ -4,6 +4,7 @@
 <table id="tab">
     <thead>
         <tr>
+        <th>ID</th>
             <th>First Name</th>
             <th>Last Name</th>
         </tr>
@@ -15,6 +16,7 @@
         foreach ($requete->fetchAll() as $real) {
             ?>
             <tr>
+                <td><?= $real['id_director'] ?></td>
                 <td><a href="index.php?action=detailRealisateur&id=<?php echo $real['id_director'] ?>">
                         <?= $real['fname_person']; ?>
                 </td>
@@ -26,6 +28,8 @@
     </tbody>
 </table>
 
+
+<a href="index.php?action=ListRealisateurs">Ajouter un realisateur</a>
 
 <?php
 $titre = "List des realisateurs ";

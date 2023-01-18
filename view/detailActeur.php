@@ -1,6 +1,10 @@
-<?php ob_start() ?>
+<?php 
+ob_start();
 
+$acteur = $requete->fetch();
 
+?>
+<img src="<?= $acteur['image'] ?>" >
 <table >
     <thead>
         <tr>
@@ -14,17 +18,15 @@
     </thead>
 
     <tbody>
-        <?php
-        foreach($requete->fetchAll() as $acteur){
-          ?>
+      
           <tr>
-            <td><?= $acteur['prenom_personne'];?></td>
-            <td><?= $acteur['nom_personne'];?></td>
-            <td><?= $acteur['date_naissance'];?></td>
-            <td><?= $acteur['sexe_personne'];?></td>
+            <td><?= $acteur['fname_person'];?></td>
+            <td><?= $acteur['lname_person'];?></td>
+            <td><?= $acteur['birthday_person'];?></td>
+            <td><?= $acteur['sex_person'];?></td>
             <td><?= $acteur['nomf'];?></td>
           </tr>
-<?php }?>
+
     </tbody>
 </table>
 

@@ -7,3 +7,13 @@ thead{
     background-color: darkslategray;
     color: aliceblue;
 }
+
+
+img{
+  height: 500px;
+  width: 500px;
+}
+
+h1{
+  color: red;
+}

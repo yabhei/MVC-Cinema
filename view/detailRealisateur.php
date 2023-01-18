@@ -16,9 +16,9 @@
         foreach($requete->fetchAll() as $real){
           ?>
           <tr>
-            <td><?= $real['prenom_personne'];?></td>
-            <td><?= $real['nom_personne'];?></td>
-            <td><?= $real['nom_film'];?></td>
+            <td><?= $real['fname_person'];?></td>
+            <td><?= $real['lname_person'];?></td>
+            <td><?= $real['title_film'];?></td>
           </tr>
 <?php }?>
     </tbody>

@@ -19,8 +19,8 @@ ob_start();?>
         foreach($requete->fetchAll() as $genre){
           ?>
           <tr>
-            <td><?= $genre['libelle'];?></td>
-            <td><?= $genre['nom_film'];?></td>
+            <td><?= $genre['name_category'];?></td>
+            <td><?= $genre['title_film'];?></td>
             
           </tr>
 <?php }?>

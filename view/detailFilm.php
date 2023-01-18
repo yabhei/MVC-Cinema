@@ -1,7 +1,9 @@
 <?php
-ob_start();?>
+ob_start();
+$film = $requete->fetch();
+?>
 
-
+<img id="ph" src="<?= $film["image"] ?>" alt="">
 
 <table >
     <thead>
@@ -18,16 +20,16 @@ ob_start();?>
 
     <tbody>
         <?php
-        foreach($requete->fetchAll() as $filmd){
+      
           ?>
           <tr>
-            <td>  <h2> <?= $filmd['nom_film'];?></h2> </td>
-            <td><?= $filmd['date_sortie'];?></td>
-            <td><?= $filmd['duree'];?></td>
-            <td><?= $filmd['prenom_personne'];?></td>
-            <td><?= $filmd['libelle'];?></td>
+          <td><?= $film['id_film'];?></td>
+            <td>  <h2> <?= $film['title_film'];?></h2> </td>
+            <td><?= $film['year_film'];?></td>
+            <td><?= $film['duration_film'];?></td>
+            <td><?= $film['fname_person'];?></td>
+            <td><?= $film['name_category'];?></td>
           </tr>
-<?php }?>
     </tbody>
 </table>
 
@@ -50,12 +52,14 @@ ob_start();?>
 
     <tbody>
         <?php
+        
+       
         foreach($castreque->fetchAll() as $cast){
           ?>
           <tr>
-            <td> <?= $cast['prenom_personne'];?> </td>
-            <td><?= $cast['nom_personne'];?></td>
-            <td><?= $cast['nom_role'];?></td>
+            <td> <?= $cast['fname_person'];?> </td>
+            <td><?= $cast['lname_person'];?></td>
+            <td><?= $cast['name_role'];?></td>
            
 <?php }?>
     </tbody>

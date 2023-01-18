@@ -20,7 +20,7 @@ ob_start();?>
         foreach($requete->fetchAll() as $detailrole){
           ?>
           <tr>
-            <td><?= $detailrole['nom_role'];?></td>
+            <td><?= $detailrole['name_role'];?></td>
             <td><?= $detailrole['fn'];?></td>
             <td><?= $detailrole['ln'];?></td>
             <td><?= $detailrole['nomf'];?></td>

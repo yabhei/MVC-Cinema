@@ -1,27 +1,4 @@
-<html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./public/css/style.css">
-    <title>
-        <?= $titre ?>
-    </title>
-</head>
-
-<body>
-    <div>
-        <main>
-            <nav>
-                <ul>
-                    <li><a href="index.php?action=ListFilms">Liste des films</a></li>
-                    <li><a href="index.php?action=ListActeurs">Liste des acteurs</a></li>
-                    <li><a href="index.php?action=ListRealisateurs">Liste des realisateurs</a></li>
-                    <li><a href="index.php?action=ListGenres">Liste des genres</a></li>
-                    <li><a href="index.php?action=ListRole">Liste des role</a></li>
-                </ul>
-            </nav>
 
             <!-- <nav>
                 <ul>
@@ -32,21 +9,18 @@
                     <li><a href="index.php?action=ListRole">Ajouter un role</a></li>
                 </ul>
             </nav> -->
-        </main>
-    </div>
-</body>
-
-</html>
-
+      
 <?php
 
 use Controller\CinemaController;
+use Controller\HomeController;
 
 spl_autoload_register(function ($class_name) {
     include $class_name . '.php';
 });
 
 $ctrlCinema = new CinemaController();
+$ctrlHome = new HomeController();
 
 $id = (isset($_GET['id']) ? $_GET['id'] : null);
 if (isset($_GET['action'])) {
@@ -69,14 +43,40 @@ if (isset($_GET['action'])) {
             $ctrlCinema->ListRole();
             break;
 
-        // case "detailFilm":$ctrlCinema->detailFilm($id);break;
-        // case "detailActeur":$ctrlCinema->detailActeur($id);break;
-        // case "detailRealisateur":$ctrlCinema->detailRealisateur($id);break;
-        // case "detailGenre":$ctrlCinema->detailGenre($id);break;
-        // case "detailRole":$ctrlCinema->detailRole($id);break; 
+        case "detailFilm":$ctrlCinema->detailFilm($id);break;
+        case "detailActeur":$ctrlCinema->detailActeur($id);break;
+        case "detailRealisateur":$ctrlCinema->detailRealisateur($id);break;
+        case "detailGenre":$ctrlCinema->detailGenre($id);break;
+        case "detailRole":$ctrlCinema->detailRole($id);break;
+
+        case "ajouterRole":
+            if (isset($_POST['submit'])) {
+                $ctrlCinema->ajouterRole($_POST['id'],$_POST['name']);
+                break;
+            }else{
+                echo "No submit ";
+            }
+
+            case "ajouterGenre" : 
+                if (isset($_POST['submit'])) {
+                    $ctrlCinema->ajouterGenre($_POST['id'],$_POST['name']);
+                    break;
+                }else{
+                    echo "No submit ";
+                }
+
+                case "ajouterFilm" : 
+                    if (isset($_POST['submit'])) {
+                        $ctrlCinema->ajouterFilm($_POST['id'],$_POST['title'],$_POST['year'],$_POST['duration'],$_POST['iddirector']);
+                        break;
+                    }else{
+                        echo "No submit ";
+                    }
 
     }
 
+} else {
+    $ctrlHome->home();
 }
 
 
