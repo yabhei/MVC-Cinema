@@ -14,25 +14,29 @@
 
     <tbody>
         <?php
-        foreach($requete->fetchAll() as $acteur){
-          ?>
-          <tr>
-            <td><a href="index.php?action=detailActeur&id=<?php echo $acteur['id_acteur'] ?>" ><?= $acteur['prenom_personne'];?></td>
-            <td><a href="index.php?action=detailActeur&id=<?php echo $acteur['id_acteur'] ?>" ><?= $acteur['nom_personne'];?></td>
-            <td><?= $acteur['date_naissance'];?></td>
-            <td><?= $acteur['sexe_personne'];?></td>
-          </tr>
-<?php }?>
+        foreach ($requete->fetchAll() as $acteur) {
+            ?>
+            <tr>
+                <td><a href="index.php?action=detailActeur&id=<?php echo $acteur['id_actor'] ?>">
+                        <?= $acteur['fname_person']; ?>
+                </td>
+                <td><a href="index.php?action=detailActeur&id=<?php echo $acteur['id_actor'] ?>">
+                        <?= $acteur['lname_person']; ?>
+                </td>
+                <td>
+                    <?= $acteur['birthday_person']; ?>
+                </td>
+                <td><?= $acteur['sex_person']; ?></td>
+            </tr>
+        <?php } ?>
     </tbody>
 </table>
 
 
 <?php
-$titre = "List des acteurs ";
-$titre_secondaire =  "List des acteurs";
+$titre = "List des acteurs. ";
+$titre_secondaire = "List des acteurs :";
 $contenu = ob_get_clean();
 
- require "view/template.php";
- ?>
-
-
+require "view/template.php";
+?>

@@ -17,7 +17,7 @@ ob_start();?>
         foreach($requete->fetchAll() as $genre){
           ?>
           <tr>
-            <td><a href="index.php?action=detailGenre&id=<?php echo $genre['id_genre'];  ?>"><?= $genre['libelle'];?></td>
+            <td><a href="index.php?action=detailGenre&id=<?php echo $genre['id_category'];  ?>"><?= $genre['name_category'];?></td>
             
           </tr>
 <?php }?>

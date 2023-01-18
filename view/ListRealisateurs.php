@@ -12,23 +12,25 @@
 
     <tbody>
         <?php
-        foreach($requete->fetchAll() as $real){
-          ?>
-          <tr>
-            <td><a href="index.php?action=detailRealisateur&id=<?php echo $real['id_realisateur'] ?>"><?= $real['prenom_personne'];?></td>
-            <td><a href="index.php?action=detailRealisateur&id=<?php echo $real['id_realisateur'] ?>"><?= $real['nom_personne'];?></td>
-          </tr>
-<?php }?>
+        foreach ($requete->fetchAll() as $real) {
+            ?>
+            <tr>
+                <td><a href="index.php?action=detailRealisateur&id=<?php echo $real['id_director'] ?>">
+                        <?= $real['fname_person']; ?>
+                </td>
+                <td><a href="index.php?action=detailRealisateur&id=<?php echo $real['id_director'] ?>">
+                        <?= $real['lname_person']; ?>
+                </td>
+            </tr>
+        <?php } ?>
     </tbody>
 </table>
 
 
 <?php
 $titre = "List des realisateurs ";
-$titre_secondaire =  "List des realisateurs";
+$titre_secondaire = "List des realisateurs";
 $contenu = ob_get_clean();
 
- require "view/template.php";
- ?>
-
-
+require "view/template.php";
+?>

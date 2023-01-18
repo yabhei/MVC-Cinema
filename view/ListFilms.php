@@ -19,7 +19,7 @@ ob_start();?>
         foreach($requete->fetchAll() as $film){
           ?>
           <tr>
-            <td> <a href="index.php?action=detailFilm&id=<?= $film['id_film'] ?>"><?= $film['nom_film'];?> </td>
+            <td> <a href="index.php?action=detailFilm&id=<?= $film['id_film'] ?>"><?= $film['title_film'];?> </td>
             
           </tr>
 <?php }?>
